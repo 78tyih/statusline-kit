@@ -17,14 +17,12 @@ description: >-
 ### 第一行 — 实时指标
 | 显示 | 含义 | JSON 来源 | 颜色 |
 |------|------|-----------|------|
-| `📄 ████░░ 42%` | **上下文** 占用进度条 + 百分比 | `.context_window.used_percentage` | 118 lime 青柠 |
-| `💰 $1.23` | 本会话 **花费**(美元) | `.cost.total_cost_usd` | 220 gold 金 |
+| `Context ████░░ 42%` | **上下文** 占用进度条 + 百分比 | `.context_window.used_percentage` | 118 lime 青柠 |
+| `Cost $1.23` | 本会话 **花费**(美元) | `.cost.total_cost_usd` | 220 gold 金 |
 | `· $0.80/hr` | 燃烧率(每小时,需 ccusage) | `ccusage statusline` | 208 orange 橙 |
-| `✏️ +120 -30` | 本会话增/删行数 | `.cost.total_lines_added/removed` | 48 翠绿 / 203 珊瑚红 |
-| `🔑 0.10M` | **当前窗口** Token 消耗(百万) | `.context_window.total_input_tokens` | 81 cyan 青 |
+| `+120 -30` | 本会话增/删行数 | `.cost.total_lines_added/removed` | 48 翠绿 / 203 珊瑚红 |
+| `Tok 0.10M` | **当前窗口** Token 消耗(百万) | `.context_window.total_input_tokens` | 81 cyan 青 |
 | `/2.40M` | 会话累计 Token(读 transcript 求和) | `.transcript_path` 逐行 usage | 141 violet 紫 |
-
-> emoji 图标:📄上下文 / 💰花费 / ✏️ 改动行数 / 🔑Token。终端用 Apple Color Emoji 彩色渲染;`✏️` 后补一个空格防变体选择符占位糊。不想要 emoji 就把 `line2=` 那几行的 emoji 换回 `${GRAY}Context${RESET}` 之类文字标签即可。
 
 ### 第二行 — 身份信息
 | 显示 | 含义 | JSON 来源 | 颜色 |

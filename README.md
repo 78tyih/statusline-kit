@@ -10,10 +10,10 @@ Line 1 = live metrics (context / cost / tokens), line 2 = identity (model / git 
 ## What it shows
 
 **Line 1 — metrics**
-- `📄 ████░░ 42%` — context window usage (bar + %)
-- `💰 $1.23 · $0.80/hr` — session cost + burn rate (rate needs `ccusage`)
-- `✏️ +120 -30` — lines added / removed this session
-- `🔑 0.10M/2.40M` — current-window tokens / session-cumulative tokens
+- `Context ████░░ 42%` — context window usage (bar + %)
+- `Cost $1.23 · $0.80/hr` — session cost + burn rate (rate needs `ccusage`)
+- `+120 -30` — lines added / removed this session
+- `Tok 0.10M/2.40M` — current-window tokens / session-cumulative tokens
 
 **Line 2 — identity**
 - `Opus 4.8` — current model (auto-shortened)
