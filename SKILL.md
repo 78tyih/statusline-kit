@@ -1,18 +1,39 @@
 ---
 name: statusline-kit
 description: >-
-  安装、解析、自定义 Claude Code 两行 status line(上下文/花费/Token/模型/项目位置)。
-  当用户想装状态栏、改状态栏颜色、看每个字段含义、或把这套 status line 搬到别的机器时使用。
-  Use when the user wants to install, recolor, or understand the Claude Code two-line status line.
+  安装、解析、自定义 Claude Code 两行 status line(CC-statusline-kit)。两档:Calm 抗焦虑档(只显示上下文余量+目录)与 Full 完整档(上下文/花费/Token/模型/分支/路径)。
+  当用户想装状态栏、切换 Calm/Full 档、改颜色或预警阈值、看字段含义、或搬到别的机器时使用。
+  Use when the user wants to install, switch modes, recolor, or understand the Claude Code status line.
 ---
 
-# Statusline Kit
+# CC-statusline-kit
 
-一套现成的 Claude Code 两行状态栏:**第一行是实时指标(上下文/花费/Token),第二行是身份信息(模型/分支/项目位置)**。每个数值都用不同颜色区分,一眼能读。
+一套 Claude Code 两行状态栏,核心理念:**状态栏该让人安心,不是让人更忙**。市面头部都在卷信息密度(powerline/成本投影/缓存命中率…),字段越多越要用眼睛搜,反而制造"多线程焦虑"。本 kit 反向定位,默认只回答两个问题:
 
-脚本通过 stdin 接收 Claude Code 注入的 JSON,输出两行带 ANSI 颜色的文本。
+> **「还能聊多久?」** 上下文余量 · **「我在哪?」** 目录
 
-## 字段速查(以屏幕显示顺序)
+脚本通过 stdin 接收 Claude Code 注入的 JSON,输出带 ANSI 颜色的文本。
+
+## 两档
+
+| 档位 | 脚本 | 显示 | 适用 |
+|------|------|------|------|
+| **Calm 抗焦虑档**(默认) | `scripts/statusline.sh` | 上下文余量条 + 目录 | 专注、抗仪表盘焦虑 |
+| **Full 完整档** | `scripts/statusline-full.sh` | 上下文·花费·改动·Token + 模型·分支·路径 | 确实想看全部指标 |
+
+切档:把对应脚本 `cp` 到 `~/.claude/statusline.sh` 即可。
+
+## Calm 档字段(默认)
+
+| 显示 | 符号名 | 含义 | 颜色 |
+|------|--------|------|------|
+| `Context left ██████░░ 58%` | 气量表 | 上下文**剩余**额度(非已用),三档红绿灯 | 绿118>50% / 金220 20-50% / 红203<20% |
+| `~/projects/xxx` | 坐标 | 当前目录(`$HOME`→`~`) | 110 钢蓝 |
+| `git:(main*)` | 航道 | git 分支(`*`=有改动) | 108 鼠尾草 |
+
+> 预警阈值(50% / 20%)在 `scripts/statusline.sh` 的 `if [ $left_pct ... ]` 块改;三色在 `C_OK`/`C_WARN`/`C_LOW`。
+
+## Full 档字段速查(以屏幕显示顺序)
 
 ### 第一行 — 实时指标
 | 显示 | 含义 | JSON 来源 | 颜色 |
@@ -31,7 +52,7 @@ description: >-
 | `git:(main*)` | git 分支(`*`=有改动) | `.git.branch` / `.git.dirty` | 108 sage 鼠尾草 |
 | `~/projects/xxx` | 当前窗口所在**项目位置** | `.cwd`(`$HOME`→`~`) | 110 steel 钢蓝 |
 
-> 注:脚本里物理顺序是 `line1`=身份、`line2`=指标,但末尾 `echo "$line2"` 先于 `echo "$line1"`,所以**屏幕上指标在上、身份在下**。
+> 注:Full 档脚本里物理顺序是 `line1`=身份、`line2`=指标,但末尾 `echo "$line2"` 先于 `echo "$line1"`,所以**屏幕上指标在上、身份在下**。
 
 ## 安装
 
